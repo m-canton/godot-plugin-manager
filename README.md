@@ -16,6 +16,6 @@ An interface to edit categories is pending, but I don't have time to do it right
 2. Run the project and press Import Plugins button.
 3. Now you can click on a project and select plugins to link. After press `Link Plugins` to create symbolic links in your projects.
 
-## Remove symbolic links
+## Removing symbolic links
 
 You cannot remove symbolic links from this project. You must remove symbolic links according to your operating system. Never delete them from the Godot editor as it will delete the source folder as well.
