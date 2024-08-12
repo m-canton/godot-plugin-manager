@@ -6,6 +6,8 @@ Be careful when using symbolic links as it is easier to delete files. I recommen
 
 ## Steps
 
+An interface to edit categories is pending, but I don't have time to do it right now. So I've made an alternative way using a gdscript.
+
 1. You need to create `settings.ini` with category dirs (project dirs). Edit `settings.gd` with your name-path categories and runs `settings.tscn` scene to create the file. Make sure to create a category called `plugins` that will contain all your plugins.
 2. Run the project and press Import Plugins button.
 3. Now you can click on a project and select plugins to link. After press `Link Plugins` to create symbolic links in your projects.
