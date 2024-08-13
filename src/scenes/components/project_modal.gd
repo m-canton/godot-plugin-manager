@@ -71,9 +71,7 @@ func import_plugins(plugins_path: String) -> void:
 			var filename := dir.get_next()
 			while not filename.is_empty():
 				if dir.current_is_dir():
-					if dir.is_link(filename):
-						print(filename, " is symbolic link. Skipped.")
-					else:
+					if not dir.is_link(filename):
 						var plugin_path := addons_path.path_join(filename)
 						var error := plugin_cfg.load(plugin_path.path_join("plugin.cfg"))
 						if error:
@@ -107,7 +105,6 @@ func edit_project(path: String) -> Error:
 	plugins_button.disabled = _addons_dir.is_empty()
 	title_label.text = _project_file.get_value("application", "config/name", "")
 	description_label.text = _project_file.get_value("application", "config/description", "")
-	print("[", title_label.text, "]")
 	
 	for c: Button in plugin_buttons.get_children():
 		c.button_pressed = false
@@ -158,7 +155,6 @@ func _on_link_plugins_pressed() -> void:
 				else:
 					c.set_pressed_no_signal(false)
 					c.disabled = true
-					print(c.text, " plugin is linked.")
 
 
 func _on_plugins_button_pressed() -> void:
