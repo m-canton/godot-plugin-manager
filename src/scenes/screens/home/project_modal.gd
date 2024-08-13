@@ -150,6 +150,8 @@ func _on_link_plugins_pressed() -> void:
 				if error:
 					push_error(error_string(error))
 				else:
+					c.set_pressed_no_signal(false)
+					c.disabled = true
 					print(c.text, " plugin is linked.")
 
 
