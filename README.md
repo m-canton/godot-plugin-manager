@@ -10,11 +10,10 @@ You must have all the plugin projects in a folder. The rest of the projects shou
 
 ## Steps
 
-An interface to edit categories is pending, but I don't have time to do it right now. So I've made an alternative way using a gdscript.
-
-1. You need to create `settings.ini` with category dirs (project dirs). Edit `settings.gd` with your name-path categories and runs `settings.tscn` scene to create the file. Make sure to create a category called `plugins` whose value is the dir will contain all your plugins.
-2. Run the project and press Import Plugins button.
-3. Now you can click on a project and select plugins to link. After press `Link Plugins` to create symbolic links in your projects.
+1. Run the project and press Settings button.
+2. Set the plugin dir in plugins row. You can add other rows with your different folders that contains projects. Press `Save` button to save the settings and tap outside the modal to close it.
+3. Press `Import Plugins` button to import the plugins.
+4. Now you can click on a project and select plugins to link. After press `Link Plugins` to create symbolic links in your projects.
 
 ## Removing symbolic links
 
