@@ -59,10 +59,21 @@ layout_mode = 2
 text = "Description"
 autowrap_mode = 2
 
+[node name="PluginsLabel" type="Label" parent="Modal/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Plugins"
+
 [node name="Plugins" type="GridContainer" parent="Modal/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_ailq5")
 columns = 4
+
+[node name="OtherPluginsLabel" type="Label" parent="Modal/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.803922, 0.811765, 0.823529, 1)
+text = "Others plugins"
 
 [node name="LinkButton" type="Button" parent="Modal/VBoxContainer"]
 layout_mode = 2

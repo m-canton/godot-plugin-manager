@@ -49,7 +49,9 @@ func _init_plugins() -> Error:
 	for c in plugin_buttons.get_children():
 		c.queue_free()
 	
-	for plugin_name in _plugins_file.get_sections():
+	var array := _plugins_file.get_sections()
+	array.sort()
+	for plugin_name in array:
 		var button := Button.new()
 		button.text = plugin_name
 		button.toggle_mode = true
@@ -111,6 +113,7 @@ func edit_project(path: String) -> Error:
 		c.button_pressed = false
 		c.disabled = false
 	
+	%OtherPluginsLabel.text=""
 	var dir := DirAccess.open(_addons_dir)
 	if dir and dir.list_dir_begin() == OK:
 		var filename := dir.get_next()
@@ -123,6 +126,11 @@ func edit_project(path: String) -> Error:
 							c.disabled = true
 				else:
 					print("- ", filename)
+					print(%OtherPluginsLabel.text.is_empty())
+					if %OtherPluginsLabel.text.is_empty():
+						%OtherPluginsLabel.text = filename
+					else:
+						%OtherPluginsLabel.text += ", " + filename
 			filename = dir.get_next()
 	
 	return OK
