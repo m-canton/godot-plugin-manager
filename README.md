@@ -2,7 +2,7 @@
 
 This is a Godot 4.3 project to create symbolic links from plugin projects to other projects. So you can edit your plugins from other projects. Projects don't need Godot 4.3 version.
 
-⚠ Be careful when using symbolic links as it is easier to delete files. I recommend you start by reading about removing symbolic links if you are not familiar.
+⚠ Be careful when using symbolic links as it is easier to delete files. I recommend you start by reading about removing symbolic links if you don't know about.
 
 ## Organizing your projects
 
