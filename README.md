@@ -10,7 +10,7 @@ You must have all the plugin projects in a folder. The rest of the projects shou
 
 ## Steps
 
-1. Run the project and press Settings button.
+1. Run the project and press `Settings` button.
 2. Set the plugin dir in plugins row. You can add other rows with your different folders that contains projects. Press `Save` button to save the settings and tap outside the modal to close it.
 3. Press `Import Plugins` button to import the plugins.
 4. Now you can click on a project and select plugins to link. After press `Link Plugins` to create symbolic links in your projects.
