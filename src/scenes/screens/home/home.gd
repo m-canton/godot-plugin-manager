@@ -7,15 +7,12 @@ class_name MainControl extends Control
 ## Work in Progress: Settings Modal to edit category dirs. For now, use
 ## settigns.tscn to create settings.ini with category dirs.
 
-## Settings file path for Plugin Manager.
-const SETTINGS_FILE_PATH := "user://settings.ini"
 ## 0 uses now.
 const CONFIG_FILE_PATH := "user://projects.ini"
 
 static var plugins_path := ""
 
 var _config_file := ConfigFile.new()
-var _projects: Array[Dictionary] = []
 var _current_dir := ""
 
 @onready var categories: HBoxContainer = $PanelContainer/VBoxContainer/ToolBar/Categories
@@ -96,17 +93,3 @@ func _on_category_pressed(button: BaseButton) -> void:
 
 func _on_project_pressed(path: String) -> void:
 	project_modal.edit_project(path)
-
-
-## [param path] is .godot file path.
-func _get_project_data(path: String) -> void:
-	var godot_file := ConfigFile.new()
-	godot_file.load(path)
-	
-	_projects.append({
-		name = godot_file.get_value("application", "config/name", ""),
-		path = path,
-		modified = FileAccess.get_modified_time(path),
-	})
-	
-	print(_projects)
