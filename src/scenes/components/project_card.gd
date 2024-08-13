@@ -5,8 +5,6 @@ signal pressed
 var _path := ""
 var _project_file: ConfigFile
 
-@onready var name_label: Label = $VBoxContainer/NameLabel
-
 func save() -> Error:
 	push_error("Cannot save the project.")
 	return FAILED
@@ -26,10 +24,11 @@ func load_from_file(path: String) -> Error:
 		return error
 	
 	_path = path
-	update_data.call_deferred()
+	update_data()
 	
 	return OK
 
 
 func update_data() -> void:
-	name_label.text = _project_file.get_value("application", "config/name", "")
+	%NameLabel.text = _project_file.get_value("application", "config/name", "")
+	%DescriptionLabel.text = _project_file.get_value("application", "config/description", "")

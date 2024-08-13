@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://wqllyo4d006l"]
+[gd_scene load_steps=7 format=3 uid="uid://wqllyo4d006l"]
 
 [ext_resource type="Script" path="res://src/scenes/screens/home/home.gd" id="1_om7uy"]
-[ext_resource type="Script" path="res://src/scenes/screens/home/project_modal.gd" id="2_40nk6"]
 [ext_resource type="Theme" uid="uid://cppm6yivqn3pq" path="res://src/scenes/themes/toggle_buttons.tres" id="2_wd63f"]
+[ext_resource type="PackedScene" uid="uid://bpwugc1kay4mu" path="res://src/scenes/components/project_modal.tscn" id="3_eo8fj"]
+[ext_resource type="PackedScene" uid="uid://dnnw35vu5k0xd" path="res://src/scenes/components/settings_modal.tscn" id="4_vqvnc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83oaj"]
 content_margin_left = 4.0
@@ -16,38 +17,6 @@ content_margin_left = 20.0
 content_margin_top = 10.0
 content_margin_right = 20.0
 content_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v7qnj"]
-content_margin_left = 120.0
-content_margin_top = 40.0
-content_margin_right = 120.0
-content_margin_bottom = 40.0
-bg_color = Color(0, 0, 0, 0.6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qa4yn"]
-content_margin_left = 40.0
-content_margin_top = 20.0
-content_margin_right = 40.0
-content_margin_bottom = 20.0
-bg_color = Color(0.211765, 0.239216, 0.290196, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krldl"]
-content_margin_left = 120.0
-content_margin_top = 40.0
-content_margin_right = 120.0
-content_margin_bottom = 40.0
-bg_color = Color(0, 0, 0, 0.6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_25s12"]
-content_margin_left = 40.0
-content_margin_top = 40.0
-content_margin_right = 40.0
-content_margin_bottom = 40.0
-bg_color = Color(0.211765, 0.239216, 0.290196, 1)
 
 [node name="Home" type="Control"]
 layout_mode = 3
@@ -100,7 +69,7 @@ size_flags_horizontal = 3
 alignment = 2
 
 [node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer/ToolBar/HBoxContainer2"]
-visible = false
+unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 
@@ -117,102 +86,11 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="ProjectModal" type="ScrollContainer" parent="."]
+[node name="ProjectModal" parent="." instance=ExtResource("3_eo8fj")]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_v7qnj")
-horizontal_scroll_mode = 0
-script = ExtResource("2_40nk6")
 
-[node name="Modal" type="PanelContainer" parent="ProjectModal"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_qa4yn")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ProjectModal/Modal"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ProjectModal/Modal/VBoxContainer"]
-layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="ProjectModal/Modal/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 24
-text = "Title"
-
-[node name="PluginsButton" type="Button" parent="ProjectModal/Modal/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Addons Dir"
-
-[node name="DescriptionLabel" type="Label" parent="ProjectModal/Modal/VBoxContainer"]
-custom_minimum_size = Vector2(480, 0)
-layout_mode = 2
-text = "Description"
-autowrap_mode = 2
-
-[node name="Plugins" type="GridContainer" parent="ProjectModal/Modal/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_wd63f")
-columns = 4
-
-[node name="LinkButton" type="Button" parent="ProjectModal/Modal/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Link Plugins"
-
-[node name="SettingsModal" type="PanelContainer" parent="."]
-process_mode = 4
+[node name="SettingsModal" parent="." instance=ExtResource("4_vqvnc")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_krldl")
-
-[node name="Modal" type="PanelContainer" parent="SettingsModal"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_25s12")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsModal/Modal"]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsModal/Modal/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="SettingsModal/Modal/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Add Category"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="SettingsModal/Modal/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="Categories" type="VBoxContainer" parent="SettingsModal/Modal/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsModal/Modal/VBoxContainer/ScrollContainer/Categories"]
-layout_mode = 2
-
-[node name="LineEdit" type="LineEdit" parent="SettingsModal/Modal/VBoxContainer/ScrollContainer/Categories/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="LineEdit2" type="LineEdit" parent="SettingsModal/Modal/VBoxContainer/ScrollContainer/Categories/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="Button" type="Button" parent="SettingsModal/Modal/VBoxContainer/ScrollContainer/Categories/HBoxContainer"]
-layout_mode = 2
-text = "Delete"

@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://clveflyian21x"]
+
+[ext_resource type="Script" path="res://src/scenes/components/settings_modal_category.gd" id="1_tt1f6"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+offset_right = 519.0
+offset_bottom = 31.0
+script = ExtResource("1_tt1f6")
+
+[node name="NameEdit" type="LineEdit" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="PathEdit" type="LineEdit" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+placeholder_text = "path"
+
+[node name="UpButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Up"
+
+[node name="DownButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Down"
+
+[node name="RemoveButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Remove"
