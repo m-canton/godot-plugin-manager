@@ -47,7 +47,7 @@ func _on_settings_saved() -> void:
 	button_group.pressed.connect(_on_category_pressed)
 	import_button.disabled = true
 	
-	for c in  categories.get_children():
+	for c in categories.get_children():
 		c.queue_free()
 	
 	for category in %SettingsModal.get_categories():
@@ -65,8 +65,10 @@ func _on_settings_saved() -> void:
 			button.set_meta("dir", path)
 			categories.add_child(button)
 	
-	if categories.get_child_count() > 0:
-		_on_category_pressed(categories.get_child(0))
+	for c in categories.get_children():
+		if not c.is_queued_for_deletion():
+			_on_category_pressed(c)
+			break
 
 
 func _on_category_pressed(button: BaseButton) -> void:
