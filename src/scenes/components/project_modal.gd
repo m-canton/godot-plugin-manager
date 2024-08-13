@@ -119,18 +119,16 @@ func edit_project(path: String) -> Error:
 		var filename := dir.get_next()
 		while not filename.is_empty():
 			if dir.current_is_dir():
-				if dir.is_link(filename):
-					print("+ ", filename)
-					for c: Button in plugin_buttons.get_children():
-						if c.text == filename:
-							c.disabled = true
-				else:
-					print("- ", filename)
-					print(%OtherPluginsLabel.text.is_empty())
-					if %OtherPluginsLabel.text.is_empty():
-						%OtherPluginsLabel.text = filename
-					else:
-						%OtherPluginsLabel.text += ", " + filename
+				var plugin_exists := false
+				for c: Button in plugin_buttons.get_children():
+					if c.text == filename:
+						c.disabled = true
+						plugin_exists = true
+				
+				if not dir.is_link(filename):
+					if not %OtherPluginsLabel.text.is_empty():
+						%OtherPluginsLabel.text += ", "
+					%OtherPluginsLabel.text = filename + ("*" if plugin_exists else "")
 			filename = dir.get_next()
 	
 	return OK
