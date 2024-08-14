@@ -110,7 +110,7 @@ func edit_project(path: String) -> Error:
 		c.button_pressed = false
 		c.disabled = false
 	
-	%OtherPluginsLabel.text=""
+	%OtherPluginsLabel.text = ""
 	var dir := DirAccess.open(_addons_dir)
 	if dir and dir.list_dir_begin() == OK:
 		var filename := dir.get_next()
@@ -125,7 +125,7 @@ func edit_project(path: String) -> Error:
 				if not dir.is_link(filename):
 					if not %OtherPluginsLabel.text.is_empty():
 						%OtherPluginsLabel.text += ", "
-					%OtherPluginsLabel.text = filename + ("*" if plugin_exists else "")
+					%OtherPluginsLabel.text += filename + ("*" if plugin_exists else "")
 			filename = dir.get_next()
 	
 	return OK
