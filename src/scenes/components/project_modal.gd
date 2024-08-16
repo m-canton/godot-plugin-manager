@@ -168,7 +168,7 @@ func _add_plugins_to_gitignore(new_plugins: PackedStringArray) -> void:
 		gitignore = FileAccess.get_file_as_string(gitignore_path)
 	
 	new_plugins.sort()
-	var lines: PackedStringArray = [] if gitignore.is_empty() else gitignore.split("\n")
+	var lines := PackedStringArray() if gitignore.is_empty() else gitignore.split("\n")
 	var line_count := lines.size()
 	var has_plugin_section := false
 	var i := 0
