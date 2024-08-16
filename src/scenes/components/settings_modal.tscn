@@ -49,7 +49,8 @@ text = "Settings"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Modal/VBoxContainer"]
 layout_mode = 2
-tooltip_text = "Directory where Godot executable is saved. They should start with the default name: Godot_v"
+tooltip_text = "Directory where Godot executables are saved.
+They should start with the default name: Godot_v"
 
 [node name="Label" type="Label" parent="Modal/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(24, 0)
