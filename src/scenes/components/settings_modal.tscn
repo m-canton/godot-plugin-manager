@@ -47,6 +47,22 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Settings"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Modal/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Directory where Godot executable is saved. They should start with the default name: Godot_v"
+
+[node name="Label" type="Label" parent="Modal/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Godot Dir"
+
+[node name="GodotDirEdit" type="LineEdit" parent="Modal/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="Modal/VBoxContainer"]
 layout_mode = 2
 

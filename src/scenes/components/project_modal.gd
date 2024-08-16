@@ -1,15 +1,9 @@
-extends ScrollContainer
+class_name ProjectModal extends ScrollContainer
 
+
+signal open_requested(path: String)
 
 const PLUGINS_FILE_PATH := "user://plugins.ini"
-
-
-@onready var title_label: Label = $Modal/VBoxContainer/HBoxContainer/TitleLabel
-@onready var plugins_button: Button = $Modal/VBoxContainer/HBoxContainer/PluginsButton
-
-@onready var description_label: Label = $Modal/VBoxContainer/DescriptionLabel
-@onready var plugin_buttons: GridContainer = $Modal/VBoxContainer/Plugins
-@onready var link_button: Button = $Modal/VBoxContainer/LinkButton
 
 
 var _plugins_file: ConfigFile
@@ -31,8 +25,10 @@ func _ready() -> void:
 	_plugins_file = ConfigFile.new()
 	hide()
 	_init_plugins()
-	link_button.pressed.connect(_on_link_plugins_pressed)
-	plugins_button.pressed.connect(_on_plugins_button_pressed)
+	%LinkButton.pressed.connect(_on_link_plugins_pressed)
+	%OpenAddonsButton.pressed.connect(_on_plugins_button_pressed)
+	%OpenButton.hide() #TODO Check the project version.
+	%OpenButton.pressed.connect(open_requested.emit.bind(_base_dir.path_join("project.godot")))
 
 
 func _init_plugins() -> Error:
@@ -46,7 +42,7 @@ func _init_plugins() -> Error:
 		push_error(error_string(error))
 		return error
 	
-	for c in plugin_buttons.get_children():
+	for c in %PluginList.get_children():
 		c.queue_free()
 	
 	var array := _plugins_file.get_sections()
@@ -57,7 +53,7 @@ func _init_plugins() -> Error:
 		button.toggle_mode = true
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.set_meta("base_dir", _plugins_file.get_value(plugin_name, "path", ""))
-		plugin_buttons.add_child(button)
+		%PluginList.add_child(button)
 	
 	return OK
 
@@ -93,7 +89,7 @@ func _gui_input(event: InputEvent) -> void:
 			hide()
 
 
-func edit_project(path: String) -> Error:
+func show_project(path: String) -> Error:
 	_project_file = ConfigFile.new()
 	var error := _project_file.load(path)
 	if error:
@@ -102,11 +98,11 @@ func edit_project(path: String) -> Error:
 	
 	show()
 	_base_dir = path.get_base_dir()
-	plugins_button.disabled = _addons_dir.is_empty()
-	title_label.text = _project_file.get_value("application", "config/name", "")
-	description_label.text = _project_file.get_value("application", "config/description", "")
+	%OpenAddonsButton.disabled = _addons_dir.is_empty()
+	%TitleLabel.text = _project_file.get_value("application", "config/name", "")
+	%DescriptionLabel.text = _project_file.get_value("application", "config/description", "")
 	
-	for c: Button in plugin_buttons.get_children():
+	for c: Button in %PluginList.get_children():
 		c.button_pressed = false
 		c.disabled = false
 	
@@ -117,7 +113,7 @@ func edit_project(path: String) -> Error:
 		while not filename.is_empty():
 			if dir.current_is_dir():
 				var plugin_exists := false
-				for c: Button in plugin_buttons.get_children():
+				for c: Button in %PluginList.get_children():
 					if c.text == filename:
 						c.disabled = true
 						plugin_exists = true
@@ -132,7 +128,7 @@ func edit_project(path: String) -> Error:
 
 
 func _on_link_plugins_pressed() -> void:
-	for c: Button in plugin_buttons.get_children():
+	for c: Button in %PluginList.get_children():
 		if not c.disabled and c.button_pressed:
 			var source_path: String = c.get_meta("base_dir", "")
 			if source_path.is_empty():

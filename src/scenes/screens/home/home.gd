@@ -17,12 +17,12 @@ var _current_dir := ""
 
 @onready var categories: HBoxContainer = $PanelContainer/VBoxContainer/ToolBar/Categories
 @onready var grid_container: GridContainer = $PanelContainer/VBoxContainer/ProjectContainer/GridContainer
-@onready var project_modal: ScrollContainer = $ProjectModal
 @onready var import_button: Button = $PanelContainer/VBoxContainer/ToolBar/HBoxContainer/ImportButton
 
 func _ready() -> void:
 	_on_settings_saved()
 	
+	%ProjectModal.open_requested.connect(godot_open)
 	%SettingsModal.saved.connect(_on_settings_saved)
 	%SettingsButton.pressed.connect(func(): %SettingsModal.show())
 	
@@ -35,11 +35,56 @@ func _save() -> Error:
 	return _config_file.save(CONFIG_FILE_PATH)
 
 
+func get_godot_path() -> String:
+	if %VersionOptionButton.item_count > 0:
+		return %VersionOptionButton.get_selected_metadata()
+	return ""
+
+
+func godot_open(project_path: String) -> void:
+	var path: String = %VersionOptionButton.get_selected_metadata()
+	if path.is_empty():
+		push_error("Godot path is empty.")
+		return
+	
+	OS.create_process(path, [project_path])
+
+
 func _on_import_plugins_pressed() -> void:
-	project_modal.import_plugins(plugins_path)
+	%ProjectModal.import_plugins(plugins_path)
 
 
 func _on_settings_saved() -> void:
+	_on_godot_dir_updated()
+	_on_categories_updated()
+
+
+func _on_godot_dir_updated() -> void:
+	%VersionOptionButton.clear()
+	var re := RegEx.create_from_string("^Godot_v(?<version>[0-9\\.]+)-(?<stable>[a-z0-9]+)_(?<os>.*)$")
+	var dir_path: String = %SettingsModal.get_godot_dir()
+	var dir := DirAccess.open(dir_path)
+	
+	var count := 0
+	if dir and dir.list_dir_begin() == OK:
+		var filename := dir.get_next()
+		while not filename.is_empty():
+			if not dir.current_is_dir():
+				var result := re.search(filename)
+				if result and not result.get_string("os").contains("console"):
+					var text := result.get_string("version")
+					var stable := result.get_string("stable")
+					if stable != "stable":
+						text += "-" + stable
+					
+					%VersionOptionButton.add_item(text)
+					%VersionOptionButton.set_item_metadata(count, dir_path.path_join(filename))
+					count += 1
+			filename = dir.get_next()
+	%VersionOptionButton.visible = count > 0
+
+
+func _on_categories_updated() -> void:
 	var button_group := ButtonGroup.new()
 	button_group.pressed.connect(_on_category_pressed)
 	import_button.disabled = true
@@ -92,4 +137,4 @@ func _on_category_pressed(button: BaseButton) -> void:
 
 
 func _on_project_pressed(path: String) -> void:
-	project_modal.edit_project(path)
+	%ProjectModal.show_project(path)

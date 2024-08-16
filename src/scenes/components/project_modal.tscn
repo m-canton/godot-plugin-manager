@@ -31,51 +31,70 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_v7qnj")
 horizontal_scroll_mode = 0
 script = ExtResource("1_dspmu")
 
-[node name="Modal" type="PanelContainer" parent="."]
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Modal" type="PanelContainer" parent="Container"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_qa4yn")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Modal"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/Modal"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Modal/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Container/Modal/VBoxContainer"]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="Modal/VBoxContainer/HBoxContainer"]
+[node name="TitleLabel" type="Label" parent="Container/Modal/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Title"
 
-[node name="PluginsButton" type="Button" parent="Modal/VBoxContainer/HBoxContainer"]
+[node name="OpenButton" type="Button" parent="Container/Modal/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Addons Dir"
+tooltip_text = "Open with Godot"
+text = "Open"
 
-[node name="DescriptionLabel" type="Label" parent="Modal/VBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="Container/Modal/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
 text = "Description"
 autowrap_mode = 2
 
-[node name="PluginsLabel" type="Label" parent="Modal/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Container/Modal/VBoxContainer"]
+layout_mode = 2
+
+[node name="PluginsLabel" type="Label" parent="Container/Modal/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Plugins"
 
-[node name="Plugins" type="GridContainer" parent="Modal/VBoxContainer"]
+[node name="OpenAddonsButton" type="Button" parent="Container/Modal/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Open addons dir"
+text = "Open Dir"
+
+[node name="PluginList" type="GridContainer" parent="Container/Modal/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_ailq5")
 columns = 4
 
-[node name="OtherPluginsLabel" type="Label" parent="Modal/VBoxContainer"]
+[node name="OtherPluginsLabel" type="Label" parent="Container/Modal/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.803922, 0.811765, 0.823529, 1)
 text = "Others plugins"
 
-[node name="LinkButton" type="Button" parent="Modal/VBoxContainer"]
+[node name="LinkButton" type="Button" parent="Container/Modal/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Link Plugins"

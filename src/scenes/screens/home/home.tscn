@@ -73,6 +73,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 
+[node name="VersionOptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/ToolBar/HBoxContainer2"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
 [node name="ProjectContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -87,10 +92,11 @@ theme_override_constants/v_separation = 10
 columns = 3
 
 [node name="ProjectModal" parent="." instance=ExtResource("3_eo8fj")]
+unique_name_in_owner = true
 visible = false
-layout_mode = 1
+layout_mode = 2
+anchors_preset = 0
 
 [node name="SettingsModal" parent="." instance=ExtResource("4_vqvnc")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
