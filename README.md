@@ -17,7 +17,7 @@ You must have all the plugin projects in a folder. The rest of the projects shou
 3. Press `Import Plugins` button to import the plugins.
 4. Now you can click on a project and select plugins to link. After press `Link Plugins` to create symbolic links in your projects.
 
-You should add to `.gitignore` the symlinks to prevent routes from being displayed.
+You should add to `.gitignore` the symlinks to prevent paths from being displayed.
 
 ## Removing symbolic links
 
