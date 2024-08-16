@@ -176,7 +176,7 @@ func _add_plugins_to_gitignore(new_plugins: PackedStringArray) -> void:
 	var pname := new_plugins[pi]
 	var pcount := new_plugins.size()
 	while i < line_count:
-		var line := lines[i]
+		var line := lines[i].trim_suffix("\r")
 		if has_plugin_section:
 			if line.is_empty() or line[0] in [" ", "#"]:
 				break
@@ -188,7 +188,7 @@ func _add_plugins_to_gitignore(new_plugins: PackedStringArray) -> void:
 					break
 				pname = new_plugins[pi]
 				continue
-		elif line == "# Plugin Manager":
+		elif line.begins_with("# Plugin Manager"):
 			has_plugin_section = true
 		i += 1
 	
