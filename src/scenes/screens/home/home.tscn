@@ -93,9 +93,14 @@ columns = 3
 
 [node name="ProjectModal" parent="." instance=ExtResource("3_eo8fj")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 1148.0
+offset_bottom = 646.0
 
 [node name="SettingsModal" parent="." instance=ExtResource("4_vqvnc")]
 unique_name_in_owner = true

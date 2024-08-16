@@ -22,8 +22,8 @@ var _project_file: ConfigFile
 
 
 func _ready() -> void:
-	_plugins_file = ConfigFile.new()
 	hide()
+	_plugins_file = ConfigFile.new()
 	_init_plugins()
 	%LinkButton.pressed.connect(_on_link_plugins_pressed)
 	%OpenAddonsButton.pressed.connect(_on_plugins_button_pressed)
@@ -128,6 +128,8 @@ func show_project(path: String) -> Error:
 
 
 func _on_link_plugins_pressed() -> void:
+	var new_plugins := PackedStringArray()
+	
 	for c: Button in %PluginList.get_children():
 		if not c.disabled and c.button_pressed:
 			var source_path: String = c.get_meta("base_dir", "")
@@ -141,7 +143,7 @@ func _on_link_plugins_pressed() -> void:
 				if error:
 					push_error(error_string(error))
 					_addons_dir = ""
-					continue
+					return
 			
 			var projects_dir := DirAccess.open(MainControl.plugins_path)
 			if projects_dir:
@@ -149,8 +151,61 @@ func _on_link_plugins_pressed() -> void:
 				if error:
 					push_error(error_string(error))
 				else:
+					new_plugins.append(c.text)
 					c.set_pressed_no_signal(false)
 					c.disabled = true
+	
+	_add_plugins_to_gitignore(new_plugins)
+
+
+func _add_plugins_to_gitignore(new_plugins: PackedStringArray) -> void:
+	if new_plugins.is_empty():
+		return
+	
+	var gitignore := ""
+	var gitignore_path := _addons_dir.path_join(".gitignore")
+	if FileAccess.file_exists(gitignore_path):
+		gitignore = FileAccess.get_file_as_string(gitignore_path)
+	
+	new_plugins.sort()
+	var lines: PackedStringArray = [] if gitignore.is_empty() else gitignore.split("\n")
+	var line_count := lines.size()
+	var has_plugin_section := false
+	var i := 0
+	var pi := 0
+	var pname := new_plugins[pi] + "/"
+	var pcount := new_plugins.size()
+	while i < line_count:
+		var line := lines[i]
+		if has_plugin_section:
+			if line.is_empty() or line.begins_with("#"):
+				break
+			elif line >= pname:
+				if line != pname:
+					lines.insert(i, pname)
+				pi += 1
+				if pi >= pcount:
+					break
+				pname = new_plugins[pi] + "/"
+				continue
+		elif line == "# Plugin Manager":
+			has_plugin_section = true
+		i += 1
+	
+	if not has_plugin_section:
+		if not lines.is_empty():
+			lines.append("")
+		lines.append("# Plugin Manager")
+	
+	while pi < pcount:
+		lines.append(new_plugins[pi] + "/")
+		pi += 1
+	
+	var file := FileAccess.open(gitignore_path, FileAccess.WRITE)
+	if file:
+		file.store_string("\n".join(lines))
+	else:
+		push_error(error_string(FileAccess.get_open_error()))
 
 
 func _on_plugins_button_pressed() -> void:
