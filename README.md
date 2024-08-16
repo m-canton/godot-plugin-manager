@@ -4,6 +4,8 @@ This is a Godot 4.3 project to create symbolic links from plugin projects to oth
 
 ⚠ Be careful when using symbolic links as it is easier to delete files. I recommend you start by reading about removing symbolic links if you don't know about.
 
+I only have Windows to test but I use Godot methods to create symlinks. So it should be fine on macOS and Linux too.
+
 ## Organizing your projects
 
 You must have all the plugin projects in a folder. The rest of the projects should be stored in a few different folders since the projects are not loaded recursively.
