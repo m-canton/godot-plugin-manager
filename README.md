@@ -17,6 +17,8 @@ You must have all the plugin projects in a folder. The rest of the projects shou
 3. Press `Import Plugins` button to import the plugins.
 4. Now you can click on a project and select plugins to link. After press `Link Plugins` to create symbolic links in your projects.
 
+You should add to `.gitignore` the symlinks to prevent routes from being displayed.
+
 ## Removing symbolic links
 
 You cannot remove symbolic links from this project. You must remove symbolic links according to your operating system. Never delete them from the Godot editor as it will delete the source folder as well.
