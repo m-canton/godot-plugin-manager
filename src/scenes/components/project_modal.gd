@@ -178,7 +178,7 @@ func _add_plugins_to_gitignore(new_plugins: PackedStringArray) -> void:
 	while i < line_count:
 		var line := lines[i]
 		if has_plugin_section:
-			if line.is_empty() or line.begins_with("#"):
+			if line.is_empty() or line[0] in [" ", "#"]:
 				break
 			elif line >= pname:
 				if line != pname:
@@ -198,7 +198,8 @@ func _add_plugins_to_gitignore(new_plugins: PackedStringArray) -> void:
 		lines.append("# Plugin Manager")
 	
 	while pi < pcount:
-		lines.append(new_plugins[pi] + "/")
+		lines.insert(i, new_plugins[pi] + "/")
+		i += 1
 		pi += 1
 	
 	var file := FileAccess.open(gitignore_path, FileAccess.WRITE)
