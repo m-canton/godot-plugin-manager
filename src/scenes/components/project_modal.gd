@@ -196,6 +196,7 @@ func _add_plugins_to_gitignore(new_plugins: PackedStringArray) -> void:
 		if not lines.is_empty():
 			lines.append("")
 		lines.append("# Plugin Manager")
+		i += 1
 	
 	while pi < pcount:
 		lines.insert(i, new_plugins[pi] + "/")
