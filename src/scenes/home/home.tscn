@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://wqllyo4d006l"]
 
-[ext_resource type="Script" path="res://src/scenes/scenes/home/home.gd" id="1_om7uy"]
+[ext_resource type="Script" path="res://src/scenes/home/home.gd" id="1_om7uy"]
 [ext_resource type="Theme" uid="uid://cppm6yivqn3pq" path="res://src/scenes/themes/toggle_buttons.tres" id="2_wd63f"]
 [ext_resource type="PackedScene" uid="uid://bpwugc1kay4mu" path="res://src/scenes/components/project_modal.tscn" id="3_eo8fj"]
 [ext_resource type="PackedScene" uid="uid://dnnw35vu5k0xd" path="res://src/scenes/components/settings_modal.tscn" id="4_vqvnc"]
@@ -93,14 +93,7 @@ columns = 3
 
 [node name="ProjectModal" parent="." instance=ExtResource("3_eo8fj")]
 unique_name_in_owner = true
-layout_mode = 2
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 4.0
-offset_top = 2.0
-offset_right = 1148.0
-offset_bottom = 646.0
+layout_mode = 1
 
 [node name="SettingsModal" parent="." instance=ExtResource("4_vqvnc")]
 unique_name_in_owner = true
