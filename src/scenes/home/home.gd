@@ -15,10 +15,6 @@ static var plugins_path := ""
 var _config_file := ConfigFile.new()
 var _current_dir := ""
 
-@onready var categories: HBoxContainer = $PanelContainer/VBoxContainer/ToolBar/Categories
-@onready var grid_container: GridContainer = $PanelContainer/VBoxContainer/ProjectContainer/GridContainer
-@onready var import_button: Button = $PanelContainer/VBoxContainer/ToolBar/HBoxContainer/ImportButton
-
 func _ready() -> void:
 	_on_settings_saved()
 	
@@ -26,7 +22,7 @@ func _ready() -> void:
 	%SettingsModal.saved.connect(_on_settings_saved)
 	%SettingsButton.pressed.connect(func(): %SettingsModal.show())
 	
-	import_button.pressed.connect(_on_import_plugins_pressed)
+	%ImportPluginButton.pressed.connect(_on_import_plugins_pressed)
 	
 	_config_file.load(CONFIG_FILE_PATH)
 
@@ -87,9 +83,9 @@ func _on_godot_dir_updated() -> void:
 func _on_categories_updated() -> void:
 	var button_group := ButtonGroup.new()
 	button_group.pressed.connect(_on_category_pressed)
-	import_button.disabled = true
+	%ImportPluginButton.disabled = true
 	
-	for c in categories.get_children():
+	for c in %CategoryContainer.get_children():
 		c.queue_free()
 	
 	for category in %SettingsModal.get_categories():
@@ -98,16 +94,16 @@ func _on_categories_updated() -> void:
 		if not path.is_empty():
 			if cname == "plugins":
 				plugins_path = path
-				import_button.disabled = false
+				%ImportPluginButton.disabled = false
 			
 			var button := Button.new()
 			button.text = cname.capitalize()
 			button.button_group = button_group
 			button.toggle_mode = true
 			button.set_meta("dir", path)
-			categories.add_child(button)
+			%CategoryContainer.add_child(button)
 	
-	for c in categories.get_children():
+	for c in %CategoryContainer.get_children():
 		if not c.is_queued_for_deletion():
 			_on_category_pressed(c)
 			break
@@ -122,7 +118,7 @@ func _on_category_pressed(button: BaseButton) -> void:
 		return
 	_current_dir = new_dir
 	
-	for c in grid_container.get_children():
+	for c in %ProjectContainer.get_children():
 		c.queue_free()
 	
 	for dirname in DirAccess.get_directories_at(_current_dir):
@@ -133,7 +129,7 @@ func _on_category_pressed(button: BaseButton) -> void:
 		var card := preload("res://src/scenes/components/project_card.tscn").instantiate()
 		card.load_from_file(path)
 		card.pressed.connect(_on_project_pressed.bind(path))
-		grid_container.add_child(card)
+		%ProjectContainer.add_child(card)
 
 
 func _on_project_pressed(path: String) -> void:

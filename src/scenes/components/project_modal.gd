@@ -59,23 +59,29 @@ func _init_plugins() -> Error:
 
 
 func import_plugins(plugins_path: String) -> void:
+	_plugins_file.clear()
+	
 	var plugin_cfg := ConfigFile.new()
+	
 	for dirname in DirAccess.get_directories_at(plugins_path):
 		var addons_path = plugins_path.path_join(dirname).path_join("addons")
 		var dir = DirAccess.open(addons_path)
+		
 		if dir and dir.list_dir_begin() == OK:
 			var filename := dir.get_next()
+			
 			while not filename.is_empty():
 				if dir.current_is_dir():
 					if not dir.is_link(filename):
 						var plugin_path := addons_path.path_join(filename)
 						var error := plugin_cfg.load(plugin_path.path_join("plugin.cfg"))
+						
 						if error:
 							push_error(error_string(error))
 						else:
 							_plugins_file.set_value(filename, "name", plugin_cfg.get_value("plugin", "name", ""))
 							_plugins_file.set_value(filename, "description", plugin_cfg.get_value("plugin", "description", ""))
-							_plugins_file.set_value(filename, "version", plugin_cfg.get_value("plugin", "version", "0.0"))
+							_plugins_file.set_value(filename, "version", plugin_cfg.get_value("plugin", "version", "1.0"))
 							_plugins_file.set_value(filename, "path", plugin_path)
 				filename = dir.get_next()
 	
